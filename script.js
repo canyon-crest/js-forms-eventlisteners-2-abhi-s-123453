@@ -1,3 +1,4 @@
+
 // ============================================
 //  Unit 8.7 – Forms & Event Listeners
 // ============================================
@@ -17,11 +18,15 @@
 
 // STEP 1: Get the "Shout" button by its ID ("btnShout")
 //         using document.getElementById()
-
+document.getElementById("btnShout").addEventListener("click", function() {
+    var text = document.getElementById("shoutInput").value;
+    document.getElementById("outShout").innerHTML = text.toUpperCase() + "!";
+});
 // STEP 2: Add a click event listener to the button.
 //         Inside the listener function:
 //         a) Get the text from the input with ID "shoutInput"
 //            using .value
+
 //         b) Convert the text to uppercase using .toUpperCase()
 //         c) Add "!" to the end
 //         d) Display the result in the element with ID "outShout"
@@ -43,7 +48,49 @@
 // STEP 3: Get the "Calculate Total" button by ID ("btnCalc")
 //         Add a click event listener.
 //         Inside the listener:
+document.getElementById("btnCalc").addEventListener("click", function() {
+    let sizes = document.getElementsByName("rg");
+    let sizePrice = 0;
 
+    for (i = 0; i < sizes.length; i++) {
+        if (sizes[i].checked) {
+            sizePrice = parseFloat(sizes[i].value);
+        }
+    }
+
+    let toppings = document.getElementsByName("cb");
+    let toppingCount = 0;
+
+    for (let i = 0; i < toppings.length; i++) {
+        if (toppings[i].checked) {
+            toppingCount++;
+        }
+    }
+
+    let toppingPrice = toppingCount * 0.50;
+
+    let service = document.getElementById("serviceSelect").value;
+    let serviceFee;
+
+    if (service === "dinein") {
+        serviceFee = 0;
+    } else if (service === "takeout") {
+        serviceFee = 1.50;
+    } else {
+        serviceFee = 3.00;
+    }
+
+    let total = sizePrice + toppingPrice + serviceFee;
+
+    let name = document.getElementById("myInput").value;
+
+    if (name === "") {
+        name = "Customer";
+    }
+
+    document.getElementById("myPara").innerHTML =
+        name + ", your total is $" + total.toFixed(2);
+});
 //   a) Get the selected size price:
 //      Use document.getElementsByName("rg") to get all
 //      size radio buttons. Loop through them to find the
@@ -83,3 +130,16 @@
 //         c) Uncheck ALL topping checkboxes (loop through them)
 //         d) Set the service dropdown value to "dinein"
 //         e) Set the output paragraph innerHTML to ""
+document.getElementById("clearBtn").addEventListener("click", function() {
+    document.getElementById("myInput").value = "";
+    document.getElementById("r3").checked = true;
+
+    let toppings = document.getElementsByName("cb");
+
+    for (i = 0; i < toppings.length; i++) {
+        toppings[i].checked = false;
+    }
+
+    document.getElementById("serviceSelect").value = "dinein";
+    document.getElementById("myPara").innerHTML = "";
+});
